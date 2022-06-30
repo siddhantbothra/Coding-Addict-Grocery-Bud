@@ -12,7 +12,8 @@ let editFlag = false;
 let editId = "";
 // ****** EVENT LISTENERS **********
 form.addEventListener("submit", addItem);
-
+// clear item button
+clearBtn.addEventListener("click", clearItem);
 // ****** FUNCTIONS **********
 function addItem(e) {
   e.preventDefault();
@@ -43,6 +44,10 @@ function addItem(e) {
     displayAlert("item added to the list", "success");
     // show container
     container.classList.add("show-container");
+    // add to local storage
+    addToLocalStorage(id, value);
+    // set back to default
+    setBackToDefault();
   } else if (value && editFlag) {
     console.log("editing");
   } else {
@@ -60,6 +65,29 @@ function displayAlert(text, action) {
     alert.classList.remove(`alert-${action}`);
   }, 1000);
 }
+// clear item functioln
+function clearItem() {
+  console.log("clear");
+  // clearing item from the list also
+  const items = document.querySelectorAll(".grocery-item");
+  console.log(items);
+  if (items.length > 0) {
+    items.forEach(function (item) {
+      list.removeChild(item);
+    });
+  }
+  container.classList.remove("show-container");
+  displayAlert("list is empty now", "danger");
+}
+// set back to default
+function setBackToDefault() {
+  grocery.value = "";
+  editFlag = false;
+  editId = "";
+  submitBtn.textContent = "submit";
+}
 // ****** LOCAL STORAGE **********
-
+function addToLocalStorage(id, value) {
+  console.log("added to local storage ");
+}
 // ****** SETUP ITEMS **********
