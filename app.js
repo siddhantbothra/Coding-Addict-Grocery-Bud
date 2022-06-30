@@ -13,6 +13,7 @@ let editId = "";
 // ****** EVENT LISTENERS **********
 form.addEventListener("submit", addItem);
 // clear item button
+
 clearBtn.addEventListener("click", clearItem);
 // ****** FUNCTIONS **********
 function addItem(e) {
@@ -38,6 +39,12 @@ function addItem(e) {
               </button>
             </div>
           `;
+    // we are adding here edit and delete event listeners because when list load then only we will able to see the button
+    const deleteBtn = element.querySelector(".delete-btn");
+    const editBtn = element.querySelector(".edit-btn");
+    deleteBtn.addEventListener("click", deleteItem);
+    editBtn.addEventListener("click", editItem);
+
     // append child
     list.appendChild(element);
     // display alert
@@ -78,7 +85,24 @@ function clearItem() {
   }
   container.classList.remove("show-container");
   displayAlert("list is empty now", "danger");
+  setBackToDefault();
+  // localStorage.remove("list")
 }
+//delete function
+function deleteItem(e) {
+  console.log(e.currentTarget.parentElement.parentElement);
+  const element = e.currentTarget.parentElement.parentElement;
+  list.removeChild(element);
+  if (list.children.length === 0) {
+    container.classList.remove("show-container");
+  }
+  let id = e.currentTarget.parentElement.parentElement.dataset.id;
+  //removeFromLocalStorage(id)
+
+  //console.log(e.currentTarget.parentElement.parentElement.dataset.id);
+}
+function editItem() {}
+// edit function
 // set back to default
 function setBackToDefault() {
   grocery.value = "";
@@ -89,5 +113,9 @@ function setBackToDefault() {
 // ****** LOCAL STORAGE **********
 function addToLocalStorage(id, value) {
   console.log("added to local storage ");
+  // remove from local storage
+  function removeFromLocalStorage(id) {
+    console.log(id);
+  }
 }
 // ****** SETUP ITEMS **********
